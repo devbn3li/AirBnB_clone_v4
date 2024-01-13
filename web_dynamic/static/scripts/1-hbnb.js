@@ -1,6 +1,6 @@
 $(document).ready(function () {
   console.log('amenities');
-  let $checkboxes = $(".amenities input[type='checkbox']");
+  const $checkboxes = $(".amenities input[type='checkbox']");
   let checked_amenities = [];
 
   $checkboxes.on('change', function () {
@@ -9,11 +9,11 @@ $(document).ready(function () {
 
     if ($(this).is(':checked')) {
       checked_amenities.push({
-        'id': amenity_id,
-        'name': amenity_name
+        id: amenity_id,
+        name: amenity_name
 
       });
-    }else {
+    } else {
       checked_amenities = checked_amenities.filter(function (amenity) {
         return amenity.id != amenity_id;
       });
@@ -22,7 +22,7 @@ $(document).ready(function () {
     for (let index = 0; index < checked_amenities.length; index++) {
       if (checked_amenities.length == 1 || index == checked_amenities.length - 1) {
         $('.amenities h4').append(checked_amenities[index].name);
-      }else {
+      } else {
         $('.amenities h4').append('' + checked_amenities[index].name + ', ');
       }
     }

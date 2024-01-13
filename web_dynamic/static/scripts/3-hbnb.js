@@ -33,7 +33,6 @@ $(document).ready(function () {
     }
   });
 
-  console.log('article total:' + $('section.places article').length);
   console.log('2-hbnb');
   $.ajax({
     type: 'GET',
@@ -46,6 +45,40 @@ $(document).ready(function () {
       } else {
         $('#api_status').removeClass('available');
       }
+    }
+  });
+  const postData = {
+    states: '',
+    cities: '',
+    amenities: ''
+  };
+  $.ajax({
+    type: 'POST',
+    url: 'http://localhost:5001/api/v1/places_search',
+    data: JSON.stringify({ postData }),
+    contentType: 'application/json',
+    success: function (data) {
+      $.each(data, function (index, place) {
+        const places = '<article>' +
+          '<div class="title_box">' +
+          '<h2>' + place.name + '</h2>' +
+          '<div class="price_by_night">$' + place.price_by_night + '</div>' +
+          '</div>' +
+          '<div class="information">' +
+          '<div class="max_guest">' + place.max_guest + ' Guest' + (place.max_guest != 1 ? 's' : '') + '</div>' +
+          '<div class="number_rooms">' + place.number_rooms + ' Bedroom' + (place.number_rooms != 1 ? 's' : '') + '</div>' +
+          '<div class="number_bathrooms">' + place.number_bathrooms + ' Bathroom' + (place.number_bathrooms != 1 ? 's' : '') + '</div>' +
+          '</div>' +
+          '<div class="description">' + place.description + '</div>' +
+          '</article>';
+
+        $('section.places').append(places);
+      });
+
+      console.log('article total:' + $('section.places article').length);
+    },
+    error: function (error) {
+      console.error('Error:', error);
     }
   });
 });
